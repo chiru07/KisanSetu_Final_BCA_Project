@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render, request, redirect, url_for, flash, session
 from supabase import create_client, Client
 from dotenv import load_dotenv
 import os
@@ -36,7 +36,7 @@ def current_user():
 
 @app.route("/")
 def home():
-    return render_template("home.html", connected=SUPABASE_CONNECTED, user=current_user())
+    return render("home.html", connected=SUPABASE_CONNECTED, user=current_user())
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -71,7 +71,7 @@ def register():
             flash("Registration failed. Email may already exist or database setup is incomplete.", "error")
             return redirect(url_for("register"))
 
-    return render_template("register.html", user=current_user())
+    return render("register.html", user=current_user())
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -108,7 +108,7 @@ def login():
             flash("Login failed.", "error")
             return redirect(url_for("login"))
 
-    return render_template("login.html", user=current_user())
+    return render("login.html", user=current_user())
 
 
 @app.route("/logout")
@@ -133,12 +133,12 @@ def farmer_dashboard():
             product_ids = [p["id"] for p in products]
             orders = [o for o in all_orders if o.get("product_id") in product_ids]
 
-        return render_template("farmer_dashboard.html", products=products, orders=orders, user=current_user())
+        return render("farmer_dashboard.html", products=products, orders=orders, user=current_user())
 
     except Exception as error:
         print("Farmer dashboard error:", error)
         flash("Unable to load farmer dashboard.", "error")
-        return render_template("farmer_dashboard.html", products=[], orders=[], user=current_user())
+        return render("farmer_dashboard.html", products=[], orders=[], user=current_user())
 
 
 @app.route("/buyer-dashboard")
@@ -152,12 +152,12 @@ def buyer_dashboard():
         if supabase:
             orders = supabase.table("orders").select("*").eq("buyer_id", session["user_id"]).execute().data
 
-        return render_template("buyer_dashboard.html", orders=orders, user=current_user())
+        return render("buyer_dashboard.html", orders=orders, user=current_user())
 
     except Exception as error:
         print("Buyer dashboard error:", error)
         flash("Unable to load buyer dashboard.", "error")
-        return render_template("buyer_dashboard.html", orders=[], user=current_user())
+        return render("buyer_dashboard.html", orders=[], user=current_user())
 
 
 @app.route("/products")
@@ -165,16 +165,16 @@ def products():
     try:
         if not supabase:
             flash("Supabase is not connected.", "error")
-            return render_template("products.html", products=[], user=current_user())
+            return render("products.html", products=[], user=current_user())
 
         # Supabase API call: fetch all products from database
         response = supabase.table("products").select("*").execute()
-        return render_template("products.html", products=response.data, user=current_user())
+        return render("products.html", products=response.data, user=current_user())
 
     except Exception as error:
         print("Fetch products error:", error)
         flash("Unable to fetch products.", "error")
-        return render_template("products.html", products=[], user=current_user())
+        return render("products.html", products=[], user=current_user())
 
 
 @app.route("/add-product", methods=["GET", "POST"])
@@ -215,7 +215,7 @@ def add_product():
             flash("Unable to add product.", "error")
             return redirect(url_for("add_product"))
 
-    return render_template("add_product.html", user=current_user())
+    return render("add_product.html", user=current_user())
 
 
 @app.route("/edit-product/<int:product_id>", methods=["GET", "POST"])
@@ -242,7 +242,7 @@ def edit_product(product_id):
             flash("Product updated successfully.", "success")
             return redirect(url_for("farmer_dashboard"))
 
-        return render_template("edit_product.html", product=product, user=current_user())
+        return render("edit_product.html", product=product, user=current_user())
 
     except Exception as error:
         print("Edit product error:", error)
@@ -296,9 +296,9 @@ def order_product(product_id):
             response = supabase.table("orders").insert(order_data).execute()
             print("ORDER RESPONSE:", response.data)
 
-            return render_template("success.html", order=order_data, user=current_user())
+            return render("success.html", order=order_data, user=current_user())
 
-        return render_template("order.html", product=product, user=current_user())
+        return render("order.html", product=product, user=current_user())
 
     except Exception as error:
         print("Order error:", error)
@@ -313,7 +313,7 @@ def database_status():
         products_data = supabase.table("products").select("*").execute().data if supabase else []
         orders_data = supabase.table("orders").select("*").execute().data if supabase else []
 
-        return render_template(
+        return render(
             "database_status.html",
             profiles=profiles,
             products=products_data,
