@@ -1,0 +1,23 @@
+Hosting Guide
+
+Render:
+1. Upload project to GitHub.
+2. Go to render.com.
+3. New -> Web Service.
+4. Connect repository.
+5. Build Command: pip install -r requirements.txt
+6. Start Command: gunicorn app:app
+7. Environment Variables:
+   SUPABASE_URL
+   SUPABASE_KEY
+8. Deploy.
+
+PythonAnywhere:
+1. Upload files.
+2. pip install --user -r requirements.txt
+3. Create Flask web app.
+4. Set app path.
+5. Add .env file with Supabase values.
+6. Reload.
+
+Never use service_role key in public hosting. Use publishable/anon key for this academic project.
