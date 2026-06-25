@@ -1,0 +1,23 @@
+{% extends 'base.html' %}{% block content %}
+<div class="container">
+<h2>Farmer Dashboard</h2>
+<p>Welcome, {{ user.username }}</p>
+<a class="btn" href="/add-product">Add New Product</a>
+<h3>My Products</h3>
+{% if products %}
+<table><tr><th>Crop</th><th>Category</th><th>Price</th><th>Quantity</th><th>Action</th></tr>
+{% for product in products %}
+<tr><td>{{ product.crop_name }}</td><td>{{ product.category }}</td><td>₹{{ product.price }}</td><td>{{ product.quantity }}</td><td><a class="btn" href="/edit-product/{{ product.id }}">Edit</a><a class="btn" href="/delete-product/{{ product.id }}">Delete</a></td></tr>
+{% endfor %}
+</table>
+{% else %}<p>No products added yet.</p>{% endif %}
+<h3>Orders Received</h3>
+{% if orders %}
+<table><tr><th>Buyer</th><th>Crop</th><th>Qty</th><th>Total</th><th>Status</th></tr>
+{% for order in orders %}
+<tr><td>{{ order.buyer_name }}</td><td>{{ order.crop_name }}</td><td>{{ order.quantity_ordered }}</td><td>₹{{ order.total_amount }}</td><td>{{ order.status }}</td></tr>
+{% endfor %}
+</table>
+{% else %}<p>No orders yet.</p>{% endif %}
+</div>
+{% endblock %}

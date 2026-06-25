@@ -1,0 +1,30 @@
+{% extends 'base.html' %}{% block content %}
+<div class="container">
+<h2>Available Products</h2>
+<div class="search-box">
+<input id="searchInput" onkeyup="filterProducts()" placeholder="Search crop...">
+<select id="categoryFilter" onchange="filterProducts()">
+<option value="all">All Categories</option>
+<option value="vegetables">Vegetables</option>
+<option value="grains">Grains</option>
+<option value="fruits">Fruits</option>
+<option value="dairy">Dairy</option>
+</select>
+</div>
+{% if products %}
+<div class="grid">
+{% for product in products %}
+<div class="card product-card" data-name="{{ product.crop_name }}" data-category="{{ product.category }}">
+<h3>{{ product.crop_name }}</h3>
+<p><b>Category:</b> {{ product.category }}</p>
+<p><b>Farmer:</b> {{ product.farmer_name }}</p>
+<p><b>Price:</b> ₹{{ product.price }}</p>
+<p><b>Quantity:</b> {{ product.quantity }}</p>
+<p>{{ product.description }}</p>
+{% if user.role == 'buyer' %}<a class="btn" href="/order/{{ product.id }}">Place Order</a>{% endif %}
+</div>
+{% endfor %}
+</div>
+{% else %}<p>No products available.</p>{% endif %}
+</div>
+{% endblock %}

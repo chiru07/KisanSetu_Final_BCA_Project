@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% block content %}
+<div class="container">
+<h2>Database Status</h2>
+{% if connected %}<div class="success">Supabase/PostgreSQL connected.</div>{% else %}<div class="error">Supabase not connected.</div>{% endif %}
+<h3>Profiles</h3>
+<table><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Location</th></tr>
+{% for p in profiles %}<tr><td>{{ p.id }}</td><td>{{ p.username }}</td><td>{{ p.email }}</td><td>{{ p.role }}</td><td>{{ p.location }}</td></tr>{% endfor %}
+</table>
+<h3>Products</h3>
+<table><tr><th>ID</th><th>Crop</th><th>Farmer</th><th>Price</th></tr>
+{% for p in products %}<tr><td>{{ p.id }}</td><td>{{ p.crop_name }}</td><td>{{ p.farmer_name }}</td><td>₹{{ p.price }}</td></tr>{% endfor %}
+</table>
+<h3>Orders</h3>
+<table><tr><th>ID</th><th>Buyer</th><th>Crop</th><th>Total</th><th>Status</th></tr>
+{% for o in orders %}<tr><td>{{ o.id }}</td><td>{{ o.buyer_name }}</td><td>{{ o.crop_name }}</td><td>₹{{ o.total_amount }}</td><td>{{ o.status }}</td></tr>{% endfor %}
+</table>
+</div>
+{% endblock %}

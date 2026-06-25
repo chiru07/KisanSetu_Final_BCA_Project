@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block content %}
+<div class="container">
+<h2>Payment Successful ✅</h2>
+<p>Your order has been placed successfully.</p>
+<p><b>Crop:</b> {{ order.crop_name }}</p>
+<p><b>Quantity:</b> {{ order.quantity_ordered }}</p>
+<p><b>Total:</b> ₹{{ order.total_amount }}</p>
+<a class="btn" href="/buyer-dashboard">Go to Buyer Dashboard</a>
+</div>
+{% endblock %}

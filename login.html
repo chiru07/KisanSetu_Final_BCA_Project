@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block content %}
+<div class="container">
+<h2>Login</h2>
+<p class="notice">Demo login after SQL setup: farmer@test.com / 1234 or buyer@test.com / 1234</p>
+<form method="POST" onsubmit="return validateLogin()">
+<label>Email</label><input id="email" name="email" required>
+<label>Password</label><input id="password" type="password" name="password" required>
+<button type="submit">Login</button>
+</form>
+</div>
+{% endblock %}

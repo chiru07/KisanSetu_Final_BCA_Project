@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% block content %}
+<section class="hero">
+<h1>Kisan-Setu</h1>
+<h2>Digital Marketplace for Direct Farmer-to-Consumer Trading</h2>
+<p>Farmers can list crops directly and buyers can browse, order, and pay through a simple web interface.</p>
+{% if connected %}<p><b>Database:</b> Supabase Connected ✅</p>{% else %}<p><b>Database:</b> Supabase Not Connected ❌</p>{% endif %}
+<a class="btn" href="/register">Join Now</a>
+<a class="btn" href="/products">Browse Products</a>
+</section>
+<div class="container">
+<h2>How It Works</h2>
+<div class="grid">
+<div class="card"><h3>1. Register</h3><p>Farmer or buyer creates a profile.</p></div>
+<div class="card"><h3>2. Farmer Lists Crops</h3><p>Farmers add crop name, price, quantity, and description.</p></div>
+<div class="card"><h3>3. Buyer Orders</h3><p>Buyers search products and complete dummy payment.</p></div>
+</div>
+</div>
+{% endblock %}
